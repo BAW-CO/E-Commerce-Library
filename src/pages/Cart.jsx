@@ -1,8 +1,20 @@
-import React from "react";
+import React, {useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import EmptyCart from "../assets/empty_cart.svg";
 
-const Cart = ({ cart, updateCart, removeItem, totals }) => {
+const Cart = ({ cart, changeQuantity, updateCart, removeItem }) => {
+  const total = () => {
+    let price = 0;
+    cart.forEach((item) => {
+      price += +(item.salePrice || item.originalPrice) * item.quantity;
+    });   
+    return price;
+  };
+
+  function removeItem(item) {
+    updateCart(item, 0);
+  }
+
   return (
     <div id="books__body">
       <main id="books__main">
@@ -51,18 +63,18 @@ const Cart = ({ cart, updateCart, removeItem, totals }) => {
                           max={99}
                           value={item.quantity}
                           onChange={(event) =>
-                            updateCart(item, event.target.value)
+                            changeQuantity(item, event.target.value)
                           }
                         />
                       </div>
                       <div className="cart__total">
-                        ${(itemPrice * item.quantity).toFixed(2)}
+                        $
+                        {((item.salePrice || item.originalPrice) * item.quantity).toFixed(2)}
                       </div>
                     </div>
                   );
                 })}
-                {/* {(!cart || !cart.length) && <img src={EmptyCart}/>} */}
-                {(!cart || !cart.length) && (
+                {cart.length ===0 && (
                   <div className="cart__empty">
                     <img className="cart__empty--img" src={EmptyCart} alt="" />
                     <h2>You don't have any books in your cart!</h2>
@@ -73,21 +85,21 @@ const Cart = ({ cart, updateCart, removeItem, totals }) => {
                 )}
               </div>
             </div>
-            {cart && cart.length > 0 && (
+            {cart.length > 0 && (
               <div className="total">
                 <div className="total__item total__sub-total">
                   <span>Subtotal</span>
-                  <span>${totals.subtotal.toFixed(2)}</span>
+                  <span>${total().toFixed(2)}</span>
                 </div>
                 <div className="total__item total__tax">
                   <span>Tax</span>
-                  <span>${totals.tax.toFixed(2)}</span>
+                  <span>${(total() * 0.1).toFixed(2)}</span>
                 </div>
                 <div className="total__item total__price">
                   <span>Total</span>
-                  <span>${totals.total.toFixed(2)}</span>
+                  <span>${(total() * 1.1).toFixed(2)}</span>
                 </div>
-                <button className="btn btn__checkout no-cursor" onClick={() => alert(`Haven't got around to doing this :(`)}>
+                <button className="btn btn__checkout no-cursor" onClick={() => alert(`Function`)}>
                   Proceed to checkout
                 </button>
               </div>
@@ -98,5 +110,4 @@ const Cart = ({ cart, updateCart, removeItem, totals }) => {
     </div>
   );
 };
-
 export default Cart;
