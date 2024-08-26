@@ -741,6 +741,7 @@ select {
 }
 
 .total__sub-total {
+  margin-top: 8px;
   border-top: 2px solid #7342d6;
   padding-top: 24px;
 }
