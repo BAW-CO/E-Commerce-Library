@@ -69,26 +69,6 @@ function App() {
 
 
 
-  // function numberOfItems() {
-  //   let counter = 0;
-  //   cart.forEach((item) => {
-  //     counter += +item.quantity;
-  //   });
-  //   return counter;
-  // }
-
-  // function calcPrices() {
-  //   let total = 0;
-  //   cart.forEach((item) => {
-  //     total += (item.salePrice || item.originalPrice) * item.quantity;
-  //   });
-  //   return {
-  //     subtotal: total * 0.9,
-  //     tax: total * 0.1,
-  //     total,
-  //   };
-  // }
-
   return (
     <Router>
       <div className="App">
